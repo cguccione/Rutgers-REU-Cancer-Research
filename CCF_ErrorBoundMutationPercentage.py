@@ -103,9 +103,13 @@ def CCF_calc (VAF, depth, purity, option):
     of cancer cells. They all assume that even if two
     alleles are present, unless they are both cancerous
     alleles, the cancer allele will move into a new cell
-    Option1= Cmut=1, LOH not present
-    Option2= Cmut=2, LOH present
-    Option3= Cmut=1, LOH present
+    Option1= Somatic Cmut=1, LOH not present
+    Option2= Somatic Cmut=2, LOH present
+    Option3= Somatic Cmut=1, LOH present
+    Option4= Germline Cmut=1, LOH not present
+    Option5= Germline Cmut=2, LOH present
+    Option6= Germline Cmut=1, LOH present
+    Option0= Inconclusive
     '''
 
     purity=float(purity)*0.01
@@ -123,51 +127,45 @@ def CCF_calc (VAF, depth, purity, option):
     Xlow=float(Xlow)
     V=((Xup-Xlow)/2)
 
-    #Number of cancer cells per 10 cells
-    total_cancer_cells=purity*cells
-    T=(P/purity)* total_cancer_cells
-
-    if option == 1 or option == 2:
-        #Alleles with mutation for Options 1 & 2
-        alles_w_mut_o12=float((cells*2)*VAF)
-        A_o12=(V/VAF)* alles_w_mut_o12
-
-    if option == 1:
-        #Option1
-        #Assuming that mutated allels are only on
-        #'cancer' alleles
-        CCF = alles_w_mut_o12/total_cancer_cells
-        C=(math.sqrt(math.pow((T/total_cancer_cells),2) + math.pow((A_o12/alles_w_mut_o12),2)))*CCF
-        purity_perc = str(round((CCF*100),2)) + '±' + str(round((C*100),2))
-        return purity_perc, option
-
-    if option == 2:
-        #Option2
-        CCF = alles_w_mut_o12/(2*total_cancer_cells)
-        y=2*total_cancer_cells
-        Y=2*T
-        C=(math.sqrt(math.pow((Y/y),2) + math.pow((A_o12/alles_w_mut_o12),2)))*CCF
-        purity_perc = str(round((CCF*100),2)) + '±' + str(round((C*100),2))
-        return purity_perc, option
-
-    if option == 3:
-        #Option3
-        #Calculate the total number of alleles with mutation
-        x=(cells*2)-total_cancer_cells
-        X=T
-        alles_w_mut_o3=x*VAF
-        A_o3=(math.sqrt(math.pow((X/x),2) + math.pow((V/VAF),2)))*alles_w_mut_o3
-
-        #Calculate the CCF
-        CCF = alles_w_mut_o3/total_cancer_cells
-        C=(math.sqrt(math.pow((T/total_cancer_cells),2) + math.pow((A_o3/alles_w_mut_o3),2)))*CCF
-
-        purity_prec=str(round((CCF*100),2)) + '±' + str(round((C*100),2))
-        return purity_prec, option
-
-    #Add options 4/5 here later
+    option=int(option)
+    print (option)
+    if option == 1 or option == 2 or option == 4 or option == 5:
+        Y=2
     else:
-        return 0,option
+        Y=1
+    if option ==1 or option == 3 or option == 4 or option == 5:
+        cnmut=1
+    else:
+        cnmut=2
+
+    #Simplifying variable names for following equation
+    p=purity
+    f=VAF
+    F=V
+
+    #Notes in notebook and LaTex on logic behind this
+    a=1-p
+    A=(P/p)*a
+    b=2*a
+    B=2*A
+    c=Y*p
+    C=P*Y
+    d=b+c
+    D=math.sqrt((B)**2 + (C)**2)*d
+    e=f*d
+    E=math.sqrt((F/f)**2 + (D/d)**2) * e
+    h=cnmut * p
+    H = P * cnmut
+    g = e/h
+    G= math.sqrt((E/e)**2 + (H/h)** 2) * g
+
+    purity_prec=str(round((g*100),2)) + '±' + str(round((G*100),2))
+
+    print(option)
+    if option == 0:
+        purity_prec = 0
+
+    return purity_prec, option
 
 def compare_purity (VAF, depth, lpath, lcomp):
     '''
