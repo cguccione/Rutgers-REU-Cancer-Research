@@ -182,28 +182,6 @@ def compare_purity (VAF, depth, lpath, lcomp):
     comp_purity_prec, comp_option = CCF_calc(VAF, depth, comp_purity, option)
     return comp_purity_prec, comp_option, comp_purity, 'Comp'
 
-    '''
-
-    if int(path_option) == 0:
-        print("oo")
-        return comp_purity_prec, comp_option, comp_purity, 'Comp'
-
-    elif int(comp_option) == 0:
-        print("oo")
-        return path_purity_prec, path_option, path_purity, 'Path'
-
-    else:
-        num,n,x=path_purity_prec.split(".")
-        if float(num) > 100:
-            print("oo")
-            return comp_purity_prec, comp_option, comp_purity, 'Comp'
-
-        else:
-            print("here", path_option)
-            print("oo")
-            return path_purity_prec, path_option, path_purity, 'Path'
-    '''
-
 
 temp='CCF_'+ TRF+'.xls'
 new_file=open(temp, 'w+')
