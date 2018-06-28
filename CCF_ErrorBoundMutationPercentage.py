@@ -76,20 +76,24 @@ def choose_option (LOHGIC):
     #cmut is the Cmut number
     sg,a=a.split('=')
     cmut,b=a.split('(')
-    #Option 0 means the value was unclear on which option
     #Option 1:Somatic CNmut=1
     #Option 2:Somatic CNmut=2 *So LOH occurred here but LOHGIC doesn't say that
     #Option 3: Somatic LOH CNmut=1
-    #Option 4: Germline
-    #Option 5: Germline LOH
+    #Option4= Germline Cmut=1
+    #Option5= Germline Cmut=2, *So LOH occurred here but LOHGIC doesn't say that
+    #Option6= Germline LOH Cmut=1
+    #Option0= Inconclusive
     if return_test == False:
-        if sg == "Germline CNmut " :
-            return 4
-        elif sg == "Germline LOH CNmut ":
-            return 5
+        if sg == "Germline LOH CNmut ":
+            return 6
         elif sg == "Somatic LOH CNmut ":
-                return 3
-        else:
+            return 3
+        elif sg == "Germline CNmut ":
+            if int(cmut) == 1:
+                    return 4
+            else:
+                    return 5
+        elif sg == "Somatic CNmut ":
             if int(cmut) == 1:
                     return 1
             else:
@@ -128,12 +132,11 @@ def CCF_calc (VAF, depth, purity, option):
     V=((Xup-Xlow)/2)
 
     option=int(option)
-    print (option)
     if option == 1 or option == 2 or option == 4 or option == 5:
         Y=2
     else:
         Y=1
-    if option ==1 or option == 3 or option == 4 or option == 5:
+    if option ==1 or option == 3 or option == 4 or option == 6:
         cnmut=1
     else:
         cnmut=2
