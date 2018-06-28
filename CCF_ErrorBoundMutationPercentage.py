@@ -144,22 +144,51 @@ def CCF_calc (VAF, depth, purity, option):
     F=V
 
     #Notes in notebook and LaTex on logic behind this
-    a=1-p
-    A=(P/p)*a
-    b=2*a
-    B=2*A
-    c=Y*p
-    C=P*Y
-    d=b+c
-    D=math.sqrt((B)**2 + (C)**2)*d
-    e=f*d
-    E=math.sqrt((F/f)**2 + (D/d)**2) * e
-    h=cnmut * p
-    H = P * cnmut
-    g = e/h
-    G= math.sqrt((E/e)**2 + (H/h)** 2) * g
+    if option < 4:
+        #Somatic Mutations
+        a=1-p
+        A=(P/p)*a
+        b=2*a
+        B=2*A
+        c=Y*p
+        C=P*Y
+        d=b+c
+        D=math.sqrt((B)**2 + (C)**2)
+        e=f*d
+        E=math.sqrt((F/f)**2 + (D/d)**2) * e
+        h=cnmut * p
+        H = P * cnmut
+        g = e/h
+        G= math.sqrt((E/e)**2 + (H/h)** 2) * g
 
-    purity_prec=str(round((g*100),2)) + '±' + str(round((G*100),2))
+        purity_prec=str(round((g*100),2)) + '±' + str(round((G*100),2))
+
+    else:
+        print("f", f)
+        print("p", p)
+        print('cnmut', cnmut)
+        print("Y", Y)
+        #Germline mutations
+        a=1-p
+        A=(P/p)*a
+        b=2*a
+        B=2*A
+        c=Y*p
+        C=Y*P
+        d=b+c
+        D=math.sqrt((B)**2 + (C)**2)
+        e=f*d
+        E=math.sqrt((F/f)**2 + (D/d)**2) * e
+        g=1-p
+        G=(P/p)*g
+        h=e-g
+        H=math.sqrt((E)**2 + (G)**2)
+        i=cnmut *p
+        I=cnmut * P
+        j=h/i
+        J=math.sqrt((H/h)**2 + (I/i)**2) * j
+
+        purity_prec=str(round((j*100),2)) + '±' + str(round((J*100),2))
 
     print(option)
     if option == 0:
