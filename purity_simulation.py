@@ -12,9 +12,10 @@ may be referenced later.
 
 import math
 import random
+from scipy.stats import binom
 
 #Only change this number if you want an entire new set of data
-set_count = 2
+set_count = 3
 #Creats the anwser key file
 temp='SIM_DATA_ANS_'+ str(set_count) +'.xls'
 ans_file=open(temp, 'w+')
@@ -26,60 +27,60 @@ def mut_calc(mut_o1, mut_o2, mut_o3, mut_o4, mut_o5, mut_o6, purity):
     while mut_o1 > 0:
         #Calculates the allele frequency
         f= purity/2
-        #Adds noies to the allele frequency to make it more realistic
-        VAF= round(random.normalvariate(f, 0.035), 2)
         #The depth is just a random number from 300-1000
         depth=random.randint(300, 1000)
+        #Adds noies to the allele frequency to make it more realistic
+        VAF=round(((binom.rvs(depth, f))/depth),2)
         #Adds the data to the file
         sim_file.write(str(VAF*100) + "\t" + str(depth) + "\n")
         mut_o1 = mut_o1 - 1
     while mut_o2 > 0:
         #Calculates the allele frequency
         f= purity/(2-purity)
-        #Adds noies to the allele frequency to make it more realistic
-        VAF= round(random.normalvariate(f, 0.035), 2)
         #The depth is just a random number from 300-1000
         depth=random.randint(300, 1000)
+        #Adds noies to the allele frequency to make it more realistic
+        VAF=round(((binom.rvs(depth, f))/depth),2)
         #Adds the data to the file
         sim_file.write(str(VAF*100) + "\t" + str(depth) + "\n")
         mut_o2 = mut_o2 - 1
     while mut_o3 > 0:
         #Calculates the allele frequency
         f= purity
-        #Adds noies to the allele frequency to make it more realistic
-        VAF= round(random.normalvariate(f, 0.035), 2)
         #The depth is just a random number from 300-1000
         depth=random.randint(300, 1000)
+        #Adds noies to the allele frequency to make it more realistic
+        VAF=round(((binom.rvs(depth, f))/depth),2)
         #Adds the data to the file
         sim_file.write(str(VAF*100) + "\t" + str(depth) + "\n")
         mut_o3 = mut_o3 - 1
     while mut_o4 > 0:
         #Calculates the allele frequency
         f= 1/2
-        #Adds noies to the allele frequency to make it more realistic
-        VAF= round(random.normalvariate(f, 0.035), 2)
         #The depth is just a random number from 300-1000
         depth=random.randint(300, 1000)
+        #Adds noies to the allele frequency to make it more realistic
+        VAF=round(((binom.rvs(depth, f))/depth),2)
         #Adds the data to the file
         sim_file.write(str(VAF*100) + "\t" + str(depth) + "\n")
         mut_o4 = mut_o4 - 1
     while mut_o5 > 0:
         #Calculates the allele frequency
         f= 1/(2-purity)
-        #Adds noies to the allele frequency to make it more realistic
-        VAF= round(random.normalvariate(f, 0.035), 2)
         #The depth is just a random number from 300-1000
         depth=random.randint(300, 1000)
+        #Adds noies to the allele frequency to make it more realistic
+        VAF=round(((binom.rvs(depth, f))/depth),2)
         #Adds the data to the file
         sim_file.write(str(VAF*100) + "\t" + str(depth) + "\n")
         mut_o5 = mut_o5 - 1
     while mut_o6 > 0:
         #Calculates the allele frequency
         f= (1 + purity)/2
-        #Adds noies to the allele frequency to make it more realistic
-        VAF= round(random.normalvariate(f, 0.035), 2)
         #The depth is just a random number from 300-1000
         depth=random.randint(300, 1000)
+        #Adds noies to the allele frequency to make it more realistic
+        VAF=round(((binom.rvs(depth, f))/depth),2)
         #Adds the data to the file
         sim_file.write(str(VAF*100) + "\t" + str(depth) + "\n")
         mut_o6 = mut_o6 - 1
