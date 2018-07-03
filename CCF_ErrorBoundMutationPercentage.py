@@ -3,14 +3,18 @@
 #Rutgers Cancer Institute of New Jersey
 #DIMACS REU
 
+''' This program takes patient seqencing data and outputs the CCF
+for each mutation along with error bars 
+'''
+
 import math
 #This program finds the parameter estimates and confidence intervals for binomial data
 from statsmodels.stats.proportion import proportion_confint as binofit
 
-
+file=open('simulation_data_1.xls', 'r')
 #file=open('TRF068722.xls', 'r')
 #file=open('TRF046732.xls', 'r')
-file=open('TRF351303.xls', 'r')
+#file=open('TRF351303.xls', 'r')
 lines=file.readlines()
 n, comp_purity = (lines[8]).split(":")
 n, path_purity = (lines[7]).split(":")
@@ -32,26 +36,27 @@ LOHGICcomp_list=[]
 depth_list=[]
 test=0
 for line in lines:
-    #This section just contains the mutations
+    #This loop gets the TRF value from the first line
     if test == 0:
         none,TRF=line.split(':')
         TRF=TRF.strip('\n')
         test=1
+    #This section just contains the mutations
     if count >=17:
+        #This for loop makes sure the line is long enough to work, for example
+        #things like applifications are cut out of the data
         test=0
         for word in line.split('\t'):
             test+=1
+        #Now the clean mutations are filtered and used in the rest of the program
         if test >= 12:
-            chr, start, end, gene, aminoAcid, mutation, allele, depth, strand, CN, LOHGICpath, LOHGICcomp = line.split('\t')
+            chro, start, end, gene, aminoAcid, mutation, allele, depth, strand, CN, LOHGICpath, LOHGICcomp = line.split('\t')
             gene_list.append(gene)
             allele_list.append(allele)
             LOHGICpath_list.append(LOHGICpath)
             LOHGICcomp_list.append(LOHGICcomp)
             depth_list.append(depth)
     count=count+1
-
-#Total Number of cells: doesn't matter is divided out later
-cells=10
 
 def choose_option (LOHGIC):
     #This function determines which option is correct for the
@@ -167,10 +172,6 @@ def CCF_calc (VAF, depth, purity, option):
         purity_prec=str(round((g*100),2)) + '±' + str(round((G*100),2))
 
     else:
-        print("f", f)
-        print("p", p)
-        print('cnmut', cnmut)
-        print("Y", Y)
         #Germline mutations
         a=1-p
         A=(P/p)*a
@@ -193,13 +194,13 @@ def CCF_calc (VAF, depth, purity, option):
 
         purity_prec=str(round((j*100),2)) + '±' + str(round((J*100),2))
 
-    print(option)
     if option == 0:
         purity_prec = 0
 
     return purity_prec, option
 
 def compare_purity (VAF, depth, lpath, lcomp):
+
     '''
     #Path purity
     option=choose_option(lpath)
