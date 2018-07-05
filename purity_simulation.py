@@ -13,11 +13,20 @@ may be referenced later.
 import math
 import random
 from scipy.stats import binom
+import os.path
 
 #Only change this number if you want an entire new set of data
-set_count = 3
+set_count = 1
+
+#Creates a new folder for all the files in the set to go into 
+current_directory = os.getcwd()
+file_name="PuritySim_Set" + str(set_count)
+final_directory = os.path.join(current_directory, file_name)
+if not os.path.exists(final_directory):
+   os.makedirs(final_directory)
+
 #Creats the anwser key file
-temp='SIM_DATA_ANS_'+ str(set_count) +'.xls'
+temp=final_directory + '\SIM_DATA_ANS_'+ str(set_count) +'.xls'
 ans_file=open(temp, 'w+')
 ans_file.write("File Number \t" + "Purity" + "\n")
 
@@ -135,7 +144,7 @@ while samples_count <= samples:
     ans_file.write(str(set_count) + "." + str(samples_count) + "\t" + str(purity) + "\n")
 
     #Creates the sample data files
-    temp='SIM_DATA_'+ str(set_count) + "." + str(samples_count) +'.xls'
+    temp=final_directory + '\SIM_DATA_'+ str(set_count) + "." + str(samples_count) +'.xls'
     sim_file=open(temp, 'w+')
     sim_file.write("Allele Freq. \t" + "Depth \n")
 
