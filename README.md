@@ -1,4 +1,4 @@
 # Rutgers-REU-Cancer-Research
-DIMACS REU at Rutges University
+DIMACS REU at Rutgers University
 
-Given tumor sequncing data, gives the cancer cell frequency (CCF) for each mutation. 
+Given tumor sequencing data, gives the cancer cell frequency (CCF) for each mutation.
