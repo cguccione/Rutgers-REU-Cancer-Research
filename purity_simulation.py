@@ -10,7 +10,7 @@ file and all the correct purity's are placed into another file so that they
 may be referenced later.
 
 **This version gives every mutation an equal amount of being chosen and adds in
-a few subclonal mutaions
+a few subclonal mutations
 '''
 
 import math
@@ -121,7 +121,7 @@ def mut_calc(mut_o1, mut_o2, mut_o3, mut_o4, mut_o5, mut_o6, mut_o7, mut_o8, pur
     while mut_o7 > 0:
         #Selects a random number of alleles from 3 to 8
         Y= random.randint(3,8)
-        cnmut=Y
+        cnmut= random.randint(1,Y)
         #Calculates the allele frequency
         f= (cnmut * purity)/((2*(1-purity)) + (Y * purity))
         #The depth is just a random number from 300-1000
@@ -134,7 +134,7 @@ def mut_calc(mut_o1, mut_o2, mut_o3, mut_o4, mut_o5, mut_o6, mut_o7, mut_o8, pur
     while mut_o8 > 0:
         #Selects a random number of alleles from 3 to 8
         Y= random.randint(3,8)
-        cnmut=Y
+        cnmut= random.randint(1,Y)
         #Calculates the allele frequency
         f= ((1-purity) + (cnmut * purity))/((2 * (1 - purity)) + (Y * purity))
         #The depth is just a random number from 300-1000
@@ -203,7 +203,7 @@ while samples_count <= samples:
         else:
             mut_o8 = mut_o8 + 1
         count = count +1
-        
+
     mut_calc(mut_o1, mut_o2, mut_o3, mut_o4, mut_o5, mut_o6, mut_o7, mut_o8, purity)
 
     samples_count = samples_count+1
