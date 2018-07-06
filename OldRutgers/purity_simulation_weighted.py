@@ -8,6 +8,8 @@ This file creates multiple fake mutations and gives them an allele frequency,
 depth and purity. The allele frequency (VAF) and depth are pushed into one
 file and all the correct purity's are placed into another file so that they
 may be referenced later.
+
+**This file un-equally weigths the mutations selected**
 '''
 
 import math
@@ -18,7 +20,7 @@ import os.path
 #Only change this number if you want an entire new set of data
 set_count = 1
 
-#Creates a new folder for all the files in the set to go into 
+#Creates a new folder for all the files in the set to go into
 current_directory = os.getcwd()
 file_name="PuritySim_Set" + str(set_count)
 final_directory = os.path.join(current_directory, file_name)
