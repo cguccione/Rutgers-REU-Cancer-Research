@@ -10,7 +10,7 @@ file and all the correct purity's are placed into another file so that they
 may be referenced later.
 
 **This version gives every mutation an equal amount of being chosen and adds in
-a few subclonal mutaions 
+a few subclonal mutaions
 '''
 
 import math
@@ -39,6 +39,16 @@ def mut_calc(mut_o1, mut_o2, mut_o3, mut_o4, mut_o5, mut_o6, mut_o7, mut_o8, pur
     while mut_o1 > 0:
         Y= 2
         cnmut=1
+
+        #Randomly chooses between clonal and subcloanl mutaions only for this
+        #Option1. There is currently a bit less than 1/4 chance that this mutation turns
+        #subclonal. This can be adjusted by changing the random int and while loop below
+        sub=random.randint(1,8)
+        if sub == 1 and purity > 0.2:
+            purity= purity - (random.randint(5,10) * 0.01)
+        if sub == 2 :
+            purity = purity /2
+
         #Calculates the allele frequency
         f= purity/2
         #The depth is just a random number from 300-1000
@@ -154,30 +164,46 @@ while samples_count <= samples:
     #Change the number of mutations per sample here:
     mut_count=random.randint(5,20)
 
-    #Divides the mutations into somatic/germline mutations
-    mut_germline = int(round(mut_count/3))
-    mut_somatic = mut_count - mut_germline
-
-    #Divides the somatic mutations into various CNmuts/LOH
+    #The type of mutation is randomly selected
     #Option 1:Somatic CNmut=1
-    mut_o1= int(math.ceil(mut_somatic/2))
+    #   If option 1 is choosen there is a 1/5 chance it will become subclonal
     #Option 2:Somatic LOH CNmut=2
-    mut_o2= int(math.floor((mut_somatic-mut_o1)/3))
     #Option 3: Somatic LOH CNmut=1
-    mut_o3= int(math.ceil((mut_somatic-mut_o1))/2)
-    #Option7: Somatic Cmut=?, LOH
-    mut_o7= int(math.floor((mut_somatic-mut_o1)- mut_o2)/2)
-
-    #Divides the germline mutations into various CNmuts/LOH
     #Option4: Germline Cmut=1
-    mut_o4= int(math.ceil(mut_germline/2))
     #Option5: Germline LOHN Cmut=2
-    mut_o5= int(math.floor((mut_germline-mut_o4)/3))
     #Option6: Germline LOH Cmut=1
-    mut_o6= int(math.ceil((mut_germline-mut_o4)- mut_o5)/2)
+    #Option7: Somatic Cmut=?, LOH
     #Option8: Germline Cmut=?, LOH
-    mut_o8= int(math.floor((mut_germline-mut_o4)- mut_o5)/2)
+    mut_o1 =0
+    mut_o2 =0
+    mut_o3 =0
+    mut_o4 =0
+    mut_o5 =0
+    mut_o6 =0
+    mut_o7 =0
+    mut_o8 =0
 
+    count=0
+    while count < mut_count:
+        mutation=random.randint(1,8)
+        if mutation == 1:
+            mut_o1 = mut_o1 + 1
+        elif mutation == 2:
+            mut_o2 = mut_o2 + 1
+        elif mutation == 3:
+            mut_o3 = mut_o3 + 1
+        elif mutation == 4:
+            mut_o4 = mut_o4 + 1
+        elif mutation == 5:
+            mut_o5 = mut_o5 + 1
+        elif mutation == 6:
+            mut_o6 = mut_o6 + 1
+        elif mutation == 7:
+            mut_o7 = mut_o7 + 1
+        else:
+            mut_o8 = mut_o8 + 1
+        count = count +1
+        
     mut_calc(mut_o1, mut_o2, mut_o3, mut_o4, mut_o5, mut_o6, mut_o7, mut_o8, purity)
 
     samples_count = samples_count+1
