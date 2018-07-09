@@ -4,14 +4,14 @@
 #DIMACS REU
 
 ''' This program takes patient seqencing data and outputs the CCF
-for each mutation along with error bars 
+for each mutation along with error bars
 '''
 
 import math
 #This program finds the parameter estimates and confidence intervals for binomial data
 from statsmodels.stats.proportion import proportion_confint as binofit
 
-file=open('simulation_data_1.xls', 'r')
+#file=open('simulation_data_1.xls', 'r')
 #file=open('TRF068722.xls', 'r')
 #file=open('TRF046732.xls', 'r')
 #file=open('TRF351303.xls', 'r')
@@ -81,12 +81,12 @@ def choose_option (LOHGIC):
     #cmut is the Cmut number
     sg,a=a.split('=')
     cmut,b=a.split('(')
-    #Option 1:Somatic CNmut=1
-    #Option 2:Somatic CNmut=2 *So LOH occurred here but LOHGIC doesn't say that
-    #Option 3: Somatic LOH CNmut=1
-    #Option4= Germline Cmut=1
-    #Option5= Germline Cmut=2, *So LOH occurred here but LOHGIC doesn't say that
-    #Option6= Germline LOH Cmut=1
+    #Option 1:Somatic CNmut=1, Y=2
+    #Option 2:Somatic CNmut=2, Y=2 *So LOH occurred here but LOHGIC doesn't say that
+    #Option 3: Somatic LOH CNmut=1, Y=1
+    #Option4= Germline Cmut=1, Y=2
+    #Option5= Germline Cmut=2, Y=2 *So LOH occurred here but LOHGIC doesn't say that
+    #Option6= Germline LOH Cmut=1, Y=1
     #Option0= Inconclusive
     if return_test == False:
         if sg == "Germline LOH CNmut ":
