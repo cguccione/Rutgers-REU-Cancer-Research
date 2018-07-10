@@ -27,6 +27,7 @@ easily in the future. **
 count =1
 gene_list=[]
 allele_list=[]
+
 LOHGICpath_list=[]
 LOHGICcomp_list=[]
 depth_list=[]
