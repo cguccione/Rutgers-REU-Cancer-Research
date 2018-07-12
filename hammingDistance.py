@@ -72,12 +72,13 @@ def split_data(lines, germline):
                 if float(germ) > 0.5:
                         if int(germline) == 1:
                             germline_list.append(geneA)
-                else:
-                    geneA_list.append(geneA)
+                geneA_list.append(geneA)
         count=count+1
     return TRF, geneA_list
 
-def compare_mutations(temp1, temp2):
+def compare_mutations(list1, list2):
+    temp1=list1.copy()
+    temp2=list2.copy()
     '''
     Finds diffrences in mutations
     Input: Two sets of mutations
@@ -118,6 +119,7 @@ y = Time 2
 z = Time 3
 g = Germline
 '''
+
 #xg: Time 1 vs. Germline
 xg_list, xg = compare_mutations(t1_geneA_list, germline_list)
 #yg: Time 2 vs. Germline
