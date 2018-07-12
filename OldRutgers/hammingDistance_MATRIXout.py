@@ -4,7 +4,7 @@
 #DIMACS REU
 
 '''
-**This version outputs the data in the format ideal for a tree maker
+**This version outputs the data as a legit matrix 
 This program monitors mutations and thier progression over time
 
 Input:
@@ -135,11 +135,12 @@ xz_list, xz = compare_mutations( t1_geneA_list, t3_geneA_list)
 yz_list, yz = compare_mutations( t2_geneA_list, t3_geneA_list)
 
 #Places the calculated diffrences into the matrix
-matrix_L1= "Germline " + str(0) + ' ' + str(xg) + ' ' + str(yg) + ' ' + str(zg) + '\n'
-matrix_L2= "Time_1 " + str(xg) + ' ' + str(0) + ' ' + str(xy) + ' ' + str(xz) + '\n'
-matrix_L3= "Time_2 " + str(yg) + ' ' + str(xy) + ' ' + str(0) + ' ' + str(yz) + '\n'
-matrix_L4= "Time_3 " + str(zg) + ' ' + str(xz) + ' ' + str(yz) + ' ' + str(0)
-matrix_output = '4 \n' + matrix_L1 + matrix_L2 + matrix_L3 + matrix_L4
+matrix_L1=str(0) + ' ' + str(xg) + ' ' + str(yg) + ' ' + str(zg) + '; '
+matrix_L2= str(xg) + ' ' + str(0) + ' ' + str(xy) + ' ' + str(xz) + '; '
+matrix_L3= str(yg) + ' ' + str(xy) + ' ' + str(0) + ' ' + str(yz) + '; '
+matrix_L4= str(zg) + ' ' + str(xz) + ' ' + str(yz) + ' ' + str(0)
+matrix_input = matrix_L1 + matrix_L2 + matrix_L3 + matrix_L4
+matrix_output = np.matrix(matrix_input)
 
 #Creates combination of all three file names and writes the matrix to the file
 t_combo= str(t1_TRF) + '_' + str(t2_TRF) + '_' + str(t3_TRF) + '.txt'
